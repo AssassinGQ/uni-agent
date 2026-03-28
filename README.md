@@ -1,7 +1,7 @@
 # Uni-Agent: Build, Run, and Train Agents at Scale
 
-[Docs](https://uni-agent.readthedocs.io/en/latest/index.html)
-[License](./LICENSE)
+[![Docs](https://img.shields.io/badge/docs-Read%20the%20Docs-8A2BE2)](https://uni-agent.readthedocs.io/en/latest/index.html)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue)](./LICENSE)
 
 Uni-Agent is a unified framework for building, running, and training agents at scale. It brings agent interaction, tool use, and RL training into one stack, making it easy to move from lightweight prototyping to large-scale training.
 
@@ -24,7 +24,7 @@ Start with the docs below:
 
 ## Architecture 🧩
 
-
+<img src="./assets/uni-agent.png" width="80%" alt="Uni-Agent architecture overview">
 
 Uni-Agent focuses on agent interaction and builds on top of [verl](https://github.com/verl-project/verl) for scalable training.
 
@@ -34,7 +34,7 @@ Uni-Agent focuses on agent interaction and builds on top of [verl](https://githu
 
 ## Live Dashboard 👀
 
-
+<img src="./assets/dashboard.png" width="100%" alt="Uni-Agent Dashboard overview">
 
 Uni-Agent includes a lightweight dashboard for monitoring large parallel runs in real time. It is designed for workloads such as parallel inference and reinforcement learning.
 
@@ -44,7 +44,8 @@ Start the dashboard from the repository root:
 python -m dashboard.server --log-dir /tmp/swebench_qwen3_coder --port 8765
 ```
 
-See `[dashboard/README.md](./dashboard/README.md)` for more details.
+See [`dashboard/README.md`](./dashboard/README.md) for more details.
+
 
 ## Results 📊
 
@@ -52,25 +53,16 @@ See `[dashboard/README.md](./dashboard/README.md)` for more details.
 
 We compare Uni-Agent with existing agent systems on parallel inference and verification workloads.
 
-
-| Model            | Benchmark          | OpenHands | Uni-Agent (1-Attempt, Avg@4) |
-| ---------------- | ------------------ | --------- | ---------------------------- |
-| Qwen3-Coder-30B  | SWE-Bench_verified | -         | **48.8**                     |
-| Qwen3-Coder-480B | SWE-Bench-Verified | 62.4      |                              |
-| Qwen3-Coder-Next | SWE-Bench-Verified | 66.6      | **67.7**                     |
-
+| Model | Benchmark | OpenHands | Uni-Agent (1-Attempt, Avg@4) |
+|-------|:---------:|:---------:|:-----------:|
+| Qwen3-Coder-30B  | SWE-Bench_verified |  -   | 48.8 |
+| Qwen3-Coder-480B | SWE-Bench-Verified | 62.4 |  |
+| Qwen3-Coder-Next | SWE-Bench-Verified | 66.6 | 67.7 |
 
 ### Agent Reinforcement Learning
 
 Uni-Agent supports agent RL training with the same interaction stack used at inference time. A representative recipe is to train [Qwen3-30B-A3B-Instruct](https://huggingface.co/Qwen/Qwen3-30B-A3B-Instruct-2507) on R2E-Gym using **Fully-Asynchronous RL, Partial Rollout, and GSPO**.
-Example training scripts are available in `[examples/agent_train](examples/agent_train)`.
-
-
-| Model                  | Dataset | Train Setup                          | Base | RL   |
-| ---------------------- | ------- | ------------------------------------ | ---- | ---- |
-| Qwen3-30B-A3B-Instruct | R2E-Gym | GSPO + Fully-Async + Partial Rollout | 22.2 | **36.8** |
-| Qwen3-Coder-30B-A3B-Instruct | R2E-Gym | GSPO + Fully-Async + Partial Rollout | 46.2 | **52.0** |
-
+Example training scripts are available in [`examples/agent_train`](examples/agent_train).
 
 ## Roadmap 🗺️
 
@@ -78,18 +70,18 @@ The roadmap below highlights the next major directions for Uni-Agent.
 
 **Environment Support**
 
-- Local deployment support.
-- More cloud deployment backends.
+- [ ] Local deployment support.
+- [ ] More cloud deployment backends.
 
 **Tool and Task Support**
 
-- More built-in tools and task patterns.
-- GUI tool support.
+- [ ] More built-in tools and task patterns.
+- [ ] GUI tool support.
 
 **Model Support**
 
-- DeepSeek model support.
-- Multimodal model support.
+- [ ] DeepSeek model support.
+- [ ] Multimodal model support.
 
 ## Citation 📚
 
