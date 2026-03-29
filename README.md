@@ -1,17 +1,22 @@
 # Uni-Agent: Build, Run, and Train Agents at Scale
 
-[![Docs](https://img.shields.io/badge/docs-Read%20the%20Docs-8A2BE2)](https://uni-agent.readthedocs.io/en/latest/index.html)
-[![License](https://img.shields.io/badge/license-Apache%202.0-blue)](./LICENSE)
+[Docs](https://uni-agent.readthedocs.io/en/latest/index.html)
+[License](./LICENSE)
 
-Uni-Agent is a unified framework for building, running, and training agents at scale. It brings agent interaction, tool use, and RL training into one stack, making it easy to move from lightweight prototyping to large-scale training.
+Uni-Agent is a unified framework for general agents at scale.
 
-The long-term vision of Uni-Agent is to build the backend infrastructure for next-generation agents that can perceive, act, and explore complex real-world tasks.
+- **All-in-one stack:** one framework for building, running, and training agents.
+- **Unified agent interface:** unified abstractions for diverse and complex real-world agent scenarios.
+
+The long-term vision is to build the backend infrastructure for next-generation agents across both inference and training, enabling them to perceive, act, and explore complex real-world tasks.
 
 ## Highlights ✨
 
-- **Unified task interface:** Use terminal commands to orchestrate diverse agent tasks such as coding and search, making it easy to customize and run your own agent workflows.
-- **Massively parallel interaction:** Support parallel inference and execution for 1k+ concurrent agent tasks with stable, high-throughput runtime performance.
-- **Seamless RL training pipeline:** Train predefined agent models without additional adaptation, while leveraging advanced training paradigms such as fully-async and partial rollout.
+**Unified yet decoupled agent stack:** Uni-Agent organizes agents around `model`, `tool`, and `env`, so each layer can be swapped independently while still composing into one unified interaction framework.
+
+**Large-scale parallel interaction:** Uni-Agent supports high-throughput, stable parallel inference, execution, and verification for 1000+ concurrent agent tasks.
+
+**One stack from inference to training:** Uni-Agent reuses the same interaction stack from large-scale agent execution to RL training, with support for advanced paradigms such as fully-async and partial rollout.
 
 ## Quickstart 🚀
 
@@ -26,11 +31,13 @@ Start with the docs below:
 
 <img src="./assets/uni-agent.png" width="80%" alt="Uni-Agent architecture overview">
 
-Uni-Agent focuses on agent interaction and builds on top of [verl](https://github.com/verl-project/verl) for scalable training.
+| Module | Definition |
+|------|------------|
+| `model` | The reasoning backend that decides what to do next |
+| `tool` | The means for the `model` to perceive and act on the `env` |
+| `env` | The runtime environment where actions are executed and state is preserved |
 
-- **Interaction-first design:** Uni-Agent isolates the agent interaction stack, so users can focus on agent behavior, tool use, and environment execution without being coupled to training system internals.
-- **Modular and loosely coupled components:** The framework is organized around model, tool, and environment modules, making it easy to customize or replace each part independently.
-- **From inference to training with one stack:** Uni-Agent provides ready-to-run examples for both large-scale interaction and RL training, making it straightforward to move from prototyping to reproducible experiments.
+At the core of Uni-Agent is a unified interaction loop built around `model`, `tool`, and `env`. This interaction stack is used for large-scale agent execution, and can be connected to [verl](https://github.com/verl-project/verl) for scalable RL training.
 
 ## Live Dashboard 👀
 
@@ -53,20 +60,23 @@ See [`dashboard/README.md`](./dashboard/README.md) for more details.
 
 We compare Uni-Agent with existing agent systems on parallel inference and verification workloads.
 
-| Model | Benchmark | OpenHands | Uni-Agent (1-Attempt, Avg@4) |
-|-------|:---------:|:---------:|:-----------:|
-| Qwen3-Coder-30B  | SWE-Bench_verified |  -   | **48.8** |
-| Qwen3-Coder-480B | SWE-Bench-Verified | 62.4 |  |
-| Qwen3-Coder-Next | SWE-Bench-Verified | 66.6 | **67.7** |
+
+| Model            | Benchmark          | OpenHands | Uni-Agent (1-Attempt, Avg@4) |
+| ---------------- | ------------------ |:---------:|:----------------------------:|
+| Qwen3-Coder-30B  | SWE-Bench_verified | -         | **48.8**                     |
+| Qwen3-Coder-480B | SWE-Bench-Verified | 62.4      | **64.2**                     |
+| Qwen3-Coder-Next | SWE-Bench-Verified | 66.6      | **67.7**                     |
+
 
 ### Agent Reinforcement Learning
 
 Uni-Agent supports agent RL training with the same interaction stack used at inference time. A representative recipe is to train [Qwen3-30B-A3B-Instruct](https://huggingface.co/Qwen/Qwen3-30B-A3B-Instruct-2507) on R2E-Gym using **Fully-Asynchronous RL, Partial Rollout, and GSPO**.
-Example training scripts are available in [`examples/agent_train`](examples/agent_train).
+Example training scripts are available in `[examples/agent_train](examples/agent_train)`.
 
-| Model                  | Dataset | Train Setup                          | Base | RL   |
-| ---------------------- | ------- | ------------------------------------ | ---- | ---- |
-| Qwen3-30B-A3B-Instruct | R2E-Gym | GSPO + Fully-Async + Partial Rollout | 22.2 | **36.8** |
+
+| Model                        | Dataset | Train Setup                          | Base | RL       |
+| ---------------------------- | ------- | ------------------------------------ |:----:|:--------:|
+| Qwen3-30B-A3B-Instruct       | R2E-Gym | GSPO + Fully-Async + Partial Rollout | 22.2 | **36.8** |
 | Qwen3-Coder-30B-A3B-Instruct | R2E-Gym | GSPO + Fully-Async + Partial Rollout | 46.2 | **52.0** |
 
 
