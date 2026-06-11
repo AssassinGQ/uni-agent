@@ -1,0 +1,27 @@
+# KVCAwareBalancer default configuration
+# This YAML matches the VeRL rollout.yaml router_kwargs structure.
+# VeRL passes router_kwargs as OmegaConf DictConfig to the Balancer constructor.
+
+router:
+  router_strategy: plugin_extension
+  router_class: uni_agent.llm_router.balancer.KVCAwareBalancer
+  router_kwargs:
+    strategies:
+      - _target_: uni_agent.llm_router.strategies.kvc_aware.KVCAwareStrategyConfig
+        weight: 1.0
+        alpha: 0.7
+        load_threshold: 80
+        layer_weights:
+          cpu: 1.0
+          ssd: 0.25
+    metrics:
+      retry_interval: 5
+      max_retries: 3
+      timeout: 10
+      degrade_policy: lower_priority
+      backends:
+        - _target_: uni_agent.llm_router.metrics.vllm_prometheus.VllmPrometheusConfig
+          prometheus_endpoints: null    # auto-inferred from server_addresses
+    cache_store:
+      kv_cache_store_type: list
+      ttl: 30
